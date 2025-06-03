@@ -1,11 +1,26 @@
 import React from 'react';
-import './App.css';
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
+
+import { Root } from "./pages/Root";
+import { Home } from "./pages/Home";
+import { About } from "./pages/About";
+
+const router = createBrowserRouter([
+    {
+        path: "/",
+        id: "root",
+        element: <Root />,
+        errorElement: <div>Oops! There was an error.</div>,
+        children: [
+            {index: true, element: <Home />},
+            {path: "about", element: <About />},
+        ],
+    }
+])
 
 function App() {
   return (
-    <h1>
-      Hello, World!
-    </h1>
+    <RouterProvider router={router} />
   );
 }
 
