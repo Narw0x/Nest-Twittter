@@ -1,8 +1,11 @@
+import CreateTwit from "../components/twit/createTwit";
+
 export function Home() {
     return(
-        <div className="container mx-auto px-4 py-8 bg-gray-100">
-            <h1 className="text-2xl font-bold mb-4">Welcome to the Home Page</h1>
-            <p className="text-gray-700">This is the home page of your application. You can add more content here.</p>
-        </div>
+        <section className="flex flex-col items-center justify-between gap-4">
+            <h1 className="text-3xl font-bold mb-4">Welcome to the Twit</h1>
+            <CreateTwit/>
+            <h2 className="text-2xl font-semibold mb-2">Latest Twits</h2>
+        </section>
     );
 }
