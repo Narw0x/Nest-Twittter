@@ -59,6 +59,7 @@ export default function LoginPage() {
                         console.log(response);
                         success(response);
                     }
+                    console.log(response);
                 })
                 .catch(error => {
                     console.error('Error during login:', error);

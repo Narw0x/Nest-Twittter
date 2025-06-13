@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
@@ -19,9 +19,13 @@ import { Twit, TwitSchema } from './twits/schemas/twit.schema';
       envFilePath: '.env',
       isGlobal: true,
     }),
-    MongooseModule.forRoot(
-      'mongodb+srv://martin_synak:Hva5l9M9Ka8ZMcQY@cluster0.kyph2.mongodb.net/Nest-test?retryWrites=true&w=majority&appName=Cluster0',
-    ),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        uri: configService.get<string>('MONGO_URI'),
+      }),
+      inject: [ConfigService],
+    }),
     AuthModule,
     UsersModule,
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
