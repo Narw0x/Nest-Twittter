@@ -5,59 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1a50d363-d3f8-464a-9e2f-0262664d512d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/src/auth/auth.controller.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/auth/auth.controller.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/auth/auth.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/auth/auth.service.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/auth/auth.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/auth/dto/login.dto.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/auth/jwt.strategy.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/twits/dto/create-twit.dto.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/twits/schemas/twit.schema.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/twits/twits.controller.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/twits/twits.controller.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/twits/twits.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/twits/twits.service.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/twits/twits.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/users/dto/create-user.dto.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/users/dto/update-user.dto.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/users/interface/user.interface.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/users/schemas/user.schema.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/users/users.controller.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/users/users.controller.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/users/users.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/users/users.service.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/users/users.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/.idea/frontend.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/profile/profileTwits.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/pages/auth/Login.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/pages/auth/Register.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/pages/profile/Profile.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/pages/twits/CreateTwit.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/pages/twits/UpdateTwit.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/pages/twits/ViewTwits.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/store/authStore.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/store/userStore.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/utils/auth.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/utils/validation.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/.env.example" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/app.module.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Footer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Footer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Header.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/twit/createTwit.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/About.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/About.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/Home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Home.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/Root.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Root.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,6 +75,8 @@
       <workItem from="1749046155531" duration="399000" />
       <workItem from="1749046621479" duration="13000" />
       <workItem from="1749321139532" duration="79000" />
+      <workItem from="1749827891458" duration="1837000" />
+      <workItem from="1750601940080" duration="3436000" />
     </task>
     <servers />
   </component>
