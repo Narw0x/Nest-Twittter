@@ -5,9 +5,48 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1a50d363-d3f8-464a-9e2f-0262664d512d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/.env.example" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.idea/frontend.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/postcss.config.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/public/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/public/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/public/logo192.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/public/logo512.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/public/manifest.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/public/robots.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.test.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Footer.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Header.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/profile/profileTwits.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/index.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/logo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/About.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/Home.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/Root.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/auth/Login.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/auth/Register.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/profile/Profile.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/twits/CreateTwit.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/twits/UpdateTwit.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/twits/ViewTwits.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/react-app-env.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/reportWebVitals.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/setupTests.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/store/authStore.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/store/userStore.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/utils/auth.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/utils/validation.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/tailwind.config.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/tsconfig.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,24 +73,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/martinsynak/WebstormProjects/Twitter-Clone&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Users/martinsynak/WebstormProjects/Twitter-Clone/frontend/node_modules/typescript/lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "/Users/martinsynak/WebstormProjects/Twitter-Clone",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
+    "ts.external.directory.path": "/Users/martinsynak/WebstormProjects/Twitter-Clone/backend/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/frontend/src" />
@@ -76,7 +115,7 @@
       <workItem from="1749046621479" duration="13000" />
       <workItem from="1749321139532" duration="79000" />
       <workItem from="1749827891458" duration="1837000" />
-      <workItem from="1750601940080" duration="3436000" />
+      <workItem from="1750601940080" duration="5900000" />
     </task>
     <servers />
   </component>
