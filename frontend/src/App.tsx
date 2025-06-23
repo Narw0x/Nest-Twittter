@@ -22,7 +22,6 @@ const router = createBrowserRouter([
             {path: "about", element: <AboutPage />},
             {
                 path:"auth",
-                loader: checkAuthToken,
                 children: [
                     {path: "login", element: <LoginPage />},
                     {path: "register",element: <RegisterPage />},
