@@ -7,5 +7,5 @@ export class CreateTwitDto {
 
   @IsString()
   @IsNotEmpty()
-  authorId: string;
+  userId: string;
 }

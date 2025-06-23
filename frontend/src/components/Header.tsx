@@ -13,9 +13,9 @@ export default function Header() {
     const navigate = useNavigate();
 
     const clear = () => {
+        navigate("/", { replace: true });
         clearToken();
         clearUser();
-        navigate("/", { replace: true });
     }
 
     return (

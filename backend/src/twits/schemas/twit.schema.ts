@@ -9,13 +9,10 @@ export class Twit {
   content: string;
 
   @Prop({ required: true })
-  authorId: string;
+  userId: string;
 
-  @Prop({ required: true })
-  authorName: string;
-
-  @Prop({ type: [String], default: [] })
-  likes: string[];
+  @Prop({type: Object, required: true })
+  user: object;
 
   @Prop({ default: Date.now })
   createdAt: Date;

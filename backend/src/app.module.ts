@@ -12,6 +12,9 @@ import { JwtModule } from '@nestjs/jwt';
 import { TwitsModule } from './twits/twits.module';
 import { TwitsService } from './twits/twits.service';
 import { Twit, TwitSchema } from './twits/schemas/twit.schema';
+import { LikesModule } from './likes/likes.module';
+import { LikesService } from './likes/likes.service';
+import { Like, LikeSchema } from './likes/schemas/like.schema';
 
 @Module({
   imports: [
@@ -30,10 +33,12 @@ import { Twit, TwitSchema } from './twits/schemas/twit.schema';
     UsersModule,
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     MongooseModule.forFeature([{ name: Twit.name, schema: TwitSchema }]),
+    MongooseModule.forFeature([{ name: Like.name, schema: LikeSchema }]),
     JwtModule,
     TwitsModule,
+    LikesModule,
   ],
   controllers: [AppController],
-  providers: [AppService, UsersService, AuthService, TwitsService],
+  providers: [AppService, UsersService, AuthService, TwitsService, LikesService],
 })
 export class AppModule {}

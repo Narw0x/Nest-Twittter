@@ -14,7 +14,7 @@ export default function CreateTwit() {
 
         axios.post('http://localhost:4000/twits/create', {
             content,
-            authorId: id
+            userId: id
         },{
             headers: {
                 'Content-Type': 'application/json',

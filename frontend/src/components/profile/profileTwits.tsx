@@ -64,18 +64,16 @@ export default function ProfileTwits(){
             {twits.length > 0 && (
                 <div className="mt-6 space-y-4 w-full max-w-md">
                     {twits.map(twit => (
-                        <>
-                            <div key={twit._id} className="bg-white p-4 rounded-lg shadow-md flex justify-between">
-                                <div className="flex flex-col ">
-                                    <h2 className="text-lg font-semibold">Author: {twit.authorName}</h2>
-                                    <p className="text-gray-600">{twit.content}</p>
-                                </div>
-                                <div className="flex  space-x-4">
-                                    <button onClick={() => handleClickUpdate(twit._id)} className="text-blue-500">Update</button>
-                                    <button onClick={() => handleClickDelete(twit._id)} className="text-red-500">Delete</button>
-                                </div>
+                        <div key={twit._id} className="bg-white p-4 rounded-lg shadow-md flex justify-between">
+                            <div className="flex flex-col ">
+                                <h2 className="text-lg font-semibold">Author: {twit.authorName}</h2>
+                                <p className="text-gray-600">{twit.content}</p>
                             </div>
-                        </>
+                            <div className="flex  space-x-4">
+                                <button onClick={() => handleClickUpdate(twit._id)} className="text-blue-500">Update</button>
+                                <button onClick={() => handleClickDelete(twit._id)} className="text-red-500">Delete</button>
+                            </div>
+                        </div>
                     ))}
                 </div>
             )}

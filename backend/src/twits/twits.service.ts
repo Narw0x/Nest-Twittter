@@ -4,17 +4,18 @@ import { Model } from 'mongoose';
 import { Twit, TwitDocument } from './schemas/twit.schema';
 import { UsersService } from '../users/users.service';
 
+
+
 @Injectable()
 export class TwitsService {
   constructor(
     @InjectModel(Twit.name) private twitModel: Model<TwitDocument>,
     private userService: UsersService,
-  ) {
-  }
+  ) {}
 
   async create(
     content: string,
-    authorId: string,
+    userId: string,
   ): Promise<Twit | { message: string; statusCode: number }> {
     if (content.length < 1 || content.length > 280) {
       return {
@@ -22,21 +23,26 @@ export class TwitsService {
         statusCode: 400,
       };
     }
-    const user = await this.userService.findOne(authorId);
+    const user = await this.userService.findOne(userId);
     if (!user) {
       return {
         message: 'Author not found',
         statusCode: 404,
       };
     }
+    const sendUser = {
+      name: user.name,
+      email: user.email,
+    };
+
     const createdTwit = new this.twitModel({
       content,
-      authorId,
-      authorName: user.name,
+      userId,
+      user: sendUser,
     });
     await createdTwit.save();
-    await this.userService.update(authorId, {
-      $push: { twits: createdTwit._id },
+    await this.userService.update(userId, {
+      $push: { twitsId: createdTwit._id },
     });
 
     return createdTwit.save();
@@ -69,8 +75,8 @@ export class TwitsService {
     if (!twit) {
       return { message: 'Twit not found' };
     }
-    await this.userService.update(twit.authorId, {
-      $pull: { twits: twit._id },
+    await this.userService.update(twit.userId, {
+      $pull: { twitsId: twit._id },
     });
     return twit;
   }
@@ -80,28 +86,9 @@ export class TwitsService {
   }
 
   async findByUser(userId: string): Promise<Twit[]> {
-    return this.twitModel.find({ authorId: userId }).exec();
+    return this.twitModel.find({ userId: userId }).exec();
   }
   async findOne(id: string): Promise<Twit | null> {
     return this.twitModel.findById({ _id: id }).exec();
-  }
-
-  async likeTwit(
-    twitId: string,
-    userId: string,
-  ): Promise<Twit | { message: string; statusCode: number }> {
-    const twit = await this.twitModel.findById(twitId).exec();
-    if (!twit) {
-      return { message: 'Twit not found', statusCode: 404 };
-    }
-    if (twit.likes.includes(userId)) {
-      twit.likes = twit.likes.filter((id) => id !== userId);
-      await this.userService.update(userId, { $pull: { liked: twitId } });
-    } else {
-      twit.likes.push(userId);
-      await this.userService.update(userId, { $push: { liked: twitId } });
-    }
-    await twit.save();
-    return twit;
   }
 }

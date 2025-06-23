@@ -8,8 +8,12 @@ interface Twits {
     likes: [string];
     _id: string;
     content: string;
-    authorId: string;
-    authorName: string;
+    userId: string;
+    user: {
+        _id: string;
+        name: string;
+        email: string;
+    };
 }
 
 export default function ViewTwits() {
@@ -36,14 +40,14 @@ export default function ViewTwits() {
             .catch(error => {
                 console.error('Error fetching twits:', error);
             });
-    }, []);
+    }, [token]);
 
     const handleClickNewTwit = () => {
         navigate('/twits/create', { replace: true });
     }
 
     const handleLike = (id:string) => {
-        axios.post(`http://localhost:4000/twits/like`,{twitId: id, userId: userId}, {
+        axios.post(`http://localhost:4000/likes`,{twitId: id, userId: userId}, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
@@ -51,11 +55,8 @@ export default function ViewTwits() {
         }).then(response => {
             console.log(response)
             if (response.status === 201) {
-                // @ts-ignore
-                if( likes.includes(id)) {
-                    // @ts-ignore
+                if( likes?.includes(id)) {
                     updateUser({
-                        // @ts-ignore
                         liked: likes.filter((likeId: string) => likeId !== id),
                         _id: null,
                         name: null,
@@ -63,8 +64,7 @@ export default function ViewTwits() {
                     });
                 }else{
                     updateUser({
-                        // @ts-ignore
-                        liked: [...likes, id],
+                        liked: [...(likes ?? []), id],
                         _id: null,
                         name: null,
                         email: null
@@ -76,8 +76,6 @@ export default function ViewTwits() {
             }
         })
     }
-    console.log(likes);
-
     return (
         <div className="container mx-auto p-4">
             <h1 className="text-2xl font-bold mb-4 text-center">View Twits</h1>
@@ -90,10 +88,9 @@ export default function ViewTwits() {
                         <li key={twit._id} className="bg-white p-4 rounded-lg shadow-md">
                             <p className="text-gray-800">{twit.content}</p>
                             <div className="flex flex-wrap items-center justify-between">
-                                <p className="text-gray-500 mt-2">Author: {twit.authorName}</p>
+                                <p className="text-gray-500 mt-2">Author: {twit.user.name}</p>
                                 <button onClick={()=> handleLike(twit._id)} className="text-gray-500 mt-2">{
-                                    //@ts-ignore
-                                    likes.includes(twit._id) ? 'Unlike' : 'Like'
+                                    likes?.includes(twit._id) ? 'Unlike' : 'Like'
                                 }</button>
                             </div>
                         </li>

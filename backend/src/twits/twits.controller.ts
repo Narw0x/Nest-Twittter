@@ -2,7 +2,8 @@ import {
   Body,
   Controller,
   Delete,
-  Get, Param,
+  Get,
+  Param,
   Post,
   Put,
   UseGuards,
@@ -35,7 +36,7 @@ export class TwitsController {
   ): Promise<Twit | { message: string; statusCode: number }> {
     return await this.twitsService.create(
       createTwitDto.content,
-      createTwitDto.authorId,
+      createTwitDto.userId,
     );
   }
   @Put(':id')
@@ -55,13 +56,5 @@ export class TwitsController {
   @Delete(':id')
   delete(@Param('id') id: string): Promise<Twit | { message: string }> {
     return this.twitsService.delete(id);
-  }
-
-  @Post('like')
-  likeTwit(
-    @Body('twitId') twitId: string,
-    @Body('userId') userId: string,
-  ): Promise<Twit | { message: string; statusCode: number }> {
-    return this.twitsService.likeTwit(twitId, userId);
   }
 }

@@ -15,10 +15,7 @@ export class User {
   password: string;
 
   @Prop({ type: [String], default: [] })
-  twits: string[];
-
-  @Prop({ type: [String], default: [] })
-  liked: string[];
+  twitsId: string[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

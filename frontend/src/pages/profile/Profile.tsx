@@ -25,7 +25,6 @@ export default function ProfilePage() {
             }
         })
             .then(response => {
-
                 setProfileData(response.data);
             })
             .catch(error => {
