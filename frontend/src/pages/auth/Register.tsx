@@ -41,7 +41,7 @@ export default function RegisterPage(){
     const ErrorMessage = {
         name: 'Name must be at least 3 characters long and contain only letters, numbers, and underscores.',
         email: 'Please enter a valid email address.',
-        password: 'Password must be at least 6 characters long.',
+        password: 'Password must be at least 6 characters long. It must contain at least one uppercase letter, one lowercase letter, and one number.',
         confirmPassword: 'Passwords do not match.'
     }
 
@@ -68,6 +68,7 @@ export default function RegisterPage(){
         if(!isValidEmail(userInfo.email)) {
             setError(prevState => ({
                 ...prevState,
+                name: false,
                 email: true
             }));
             return;
@@ -76,6 +77,8 @@ export default function RegisterPage(){
         if(!isValidPassword(userInfo.password)) {
             setError(prevState => ({
                 ...prevState,
+                name: false,
+                email: false,
                 password: true
             }));
             return;
@@ -84,27 +87,44 @@ export default function RegisterPage(){
         if(userInfo.password !== userInfo.confirmPassword) {
             setError(prevState => ({
                 ...prevState,
+                name: false,
+                email: false,
+                password: false,
                 confirmPassword: true
             }));
             return;
         }
+
+        setError({
+            name: false,
+            email: false,
+            password: false,
+            confirmPassword: false
+        });
 
 
         try {
             axios.post('http://localhost:4000/auth/register', userInfo)
                 .then(response => {
                     if (response.status === 201) {
-                        console.log('User registered successfully:', response.data);
                         if (response.data.statusCode === 400) {
                             setMessage(response.data.message);
                             return;
                         }
-                        setMessage('Registration successful! You can now log in.');
-                        navigate('/auth/login', { replace: true });
+                        navigate('/auth/login', { replace: true, state: {message: 'Registration successful! Please log in.'} });
                     }
                 })
                 .catch(error => {
                     console.error('Error during registration:', error);
+                    if (axios.isAxiosError(error) && error.response) {
+                        if (error.response.status === 400) {
+                            setMessage(error.response.data.message);
+                        } else {
+                            setMessage('An unexpected error occurred. Please try again later.');
+                        }
+                    } else {
+                        setMessage('An unexpected error occurred. Please try again later.');
+                    }
                 });
         }catch(error){
             console.error('Unexpected error during registration:', error);
@@ -115,7 +135,7 @@ export default function RegisterPage(){
             <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
                 <h1 className="text-3xl font-bold my-4 text-center">Register</h1>
                 <p className="text-gray-500 mb-4 text-center">Create a new account to start twitting.</p>
-                {message && <p className="text-center text-blue-500 mb-4">{message}</p>}
+                {message && <p className="text-center text-red-500 mb-4">{message}</p>}
                 <form className="w-full max-w-md" onSubmit={handleSubmit}>
                     <div className="mb-4">
                         <label htmlFor="name" className="block text-sm font-medium text-gray-700">Username</label>
@@ -138,6 +158,8 @@ export default function RegisterPage(){
                         <input type="password" id="confirmPassword" className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required value={userInfo.confirmPassword} onChange={handleChange} />
                     </div>
                     <button type="submit" className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">Register</button>
+                    <hr className="my-4 text-gray-200" />
+                    <p className="text-sm text-gray-500 text-center">Already have an account? <a href="/auth/login" className="text-blue-600 hover:underline">Login here</a>.</p>
                 </form>
             </div>
         </section>
