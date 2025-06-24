@@ -1,36 +1,9 @@
-import {useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
-import axios from "axios";
-
-import {useAuthStore} from "../../store/authStore";
-import ProfileTwits from "../../components/profile/profileTwits";
-
-interface IProfile {
-    name: string;
-    email: string;
-}
+import { useProfilePage } from "../../hooks/profile/useProfileData.ts";
+import ProfileTwits from "../../components/profile/ProfileTwits";
 
 export default function ProfilePage() {
-    const {id} =useParams();
-    const token = useAuthStore((state) => state.token);
-    const [profileData, setProfileData] = useState<IProfile>({
-        name: '',
-        email: ''
-    })
+    const { profileData, isLoading, error } = useProfilePage();
 
-    useEffect(() => {
-        axios.get(`http://localhost:4000/users/${id}`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
-            .then(response => {
-                setProfileData(response.data);
-            })
-            .catch(error => {
-                console.error('There was an error fetching the profile!', error);
-            });
-    }, [id]);
     return (
         <section className="flex flex-col items-center gap-4 min-h-screen">
             <div className="flex flex-col items-center justify-center gap-4">
@@ -42,16 +15,16 @@ export default function ProfilePage() {
             </div>
             <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
                 <h2 className="text-xl font-semibold mb-4">Profile Information</h2>
-                {profileData ? (
+                {isLoading && <p className="text-gray-500">Loading profile data...</p>}
+                {error && <p className="text-red-500 mb-4">{error}</p>}
+                {profileData && !isLoading && !error && (
                     <div>
                         <p className="text-gray-700"><strong>Username:</strong> {profileData.name}</p>
                         <p className="text-gray-700"><strong>Email:</strong> {profileData.email}</p>
                     </div>
-                ) : (
-                    <p className="text-gray-500">Loading profile data...</p>
                 )}
             </div>
             <ProfileTwits />
         </section>
-    )
+    );
 }

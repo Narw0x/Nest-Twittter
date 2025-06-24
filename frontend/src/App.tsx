@@ -33,7 +33,7 @@ const router = createBrowserRouter([
                 children: [
                     {index: true, element: <ViewTwits/>},
                     {path: "create", element: <CreateTwit />},
-                    {path: "update/:id", element: <UpdateTwit />},
+                    {path: "update/:twitId", element: <UpdateTwit />},
                 ],
             },
             {
