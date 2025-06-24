@@ -14,5 +14,5 @@ Start the backend server:
 
 Start the frontend server:
 
-``` npm run start ```
+``` npm run dev ```
 
