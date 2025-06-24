@@ -5,7 +5,6 @@ interface User {
     _id: string | null;
     name: string | null;
     email: string | null;
-    liked?: string[] | null;
 }
 
 interface UserState extends User {
@@ -20,15 +19,13 @@ export const useUserStore = create<UserState>()(
             _id: null,
             name: null,
             email: null,
-            liked: [],
-            setUser: ({ _id, name, email, liked }) => set({ _id, name, email, liked }),
+            setUser: ({ _id, name, email,  }) => set({ _id, name, email }),
             updateUser: (user: Partial<User>) => set((state) => ({
                 _id: user._id ?? state._id,
                 name: user.name ?? state.name,
                 email: user.email ?? state.email,
-                liked: user.liked ?? state.liked,
             })),
-            clearUser: () => set({ _id: null, name: null, email: null, liked: null }),
+            clearUser: () => set({ _id: null, name: null, email: null }),
         }),
         {
             name: 'user-store',

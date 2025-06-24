@@ -5,22 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1a50d363-d3f8-464a-9e2f-0262664d512d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/src/likes/schemas/like.schema.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/twits/dto/create-twit.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/twits/dto/create-twit.dto.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/twits/schemas/twit.schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/twits/schemas/twit.schema.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/twits/twits.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/twits/twits.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/twits/twits.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/twits/twits.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/users/schemas/user.schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/users/schemas/user.schema.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/test/app.e2e-spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/test/jest-e2e.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Header.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/profile/profileTwits.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/profile/profileTwits.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/profile/Profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/profile/Profile.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/twits/CreateTwit.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/twits/CreateTwit.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/likes/likes.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/likes/likes.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/likes/likes.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/likes/likes.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/twits/ViewTwits.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/twits/ViewTwits.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/store/userStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/store/userStore.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,7 +79,7 @@
       <workItem from="1749046621479" duration="13000" />
       <workItem from="1749321139532" duration="79000" />
       <workItem from="1749827891458" duration="1837000" />
-      <workItem from="1750601940080" duration="15882000" />
+      <workItem from="1750601940080" duration="17605000" />
     </task>
     <servers />
   </component>

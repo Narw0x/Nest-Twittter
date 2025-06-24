@@ -1,7 +1,9 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { LikesService } from './likes.service';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('likes')
+@UseGuards(AuthGuard('jwt'))
 export class LikesController {
   constructor(private readonly likeService: LikesService) {}
   @Post()
@@ -10,5 +12,10 @@ export class LikesController {
     @Body('userId') userId: string,
   ): Promise<{ message: string; statusCode: number }> {
     return this.likeService.likeTwit(twitId, userId);
+  }
+
+  @Get(':userId')
+  getUserLikes(@Param('userId') userId: string): Promise<string[]> {
+    return this.likeService.getUserLikes(userId);
   }
 }

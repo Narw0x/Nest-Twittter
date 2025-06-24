@@ -5,7 +5,6 @@ import {useAuthStore} from "../../store/authStore";
 import {useUserStore} from "../../store/userStore";
 
 interface Twits {
-    likes: [string];
     _id: string;
     content: string;
     userId: string;
@@ -18,11 +17,31 @@ interface Twits {
 
 export default function ViewTwits() {
     const [twits, setTwits] = useState<Twits[]>([])
-    const likes = useUserStore((state) => state.liked);
-    const updateUser = useUserStore((state) => state.updateUser);
     const userId = useUserStore((state) => state._id);
     const token = useAuthStore((state) => state.token);
     const navigate = useNavigate();
+    const [likes, setLikes] = useState<string[]>([])
+
+    useEffect(() => {
+        axios.get(`http://localhost:4000/likes/${userId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                if (response.status === 200) {
+                    setLikes(response.data);
+                } else {
+                    console.error('Failed to fetch likes:', response.statusText);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching likes:', error);
+            });
+    }, [token, userId]);
+
+
+
     useEffect(() => {
         axios.get('http://localhost:4000/twits',{
             headers: {
@@ -32,7 +51,6 @@ export default function ViewTwits() {
             .then(response => {
                 if (response.status === 200) {
                     setTwits(response.data);
-
                 } else {
                     console.error('Failed to fetch twits:', response.statusText);
                 }
@@ -53,24 +71,14 @@ export default function ViewTwits() {
                 'Authorization': `Bearer ${token}`
             },
         }).then(response => {
-            console.log(response)
             if (response.status === 201) {
-                if( likes?.includes(id)) {
-                    updateUser({
-                        liked: likes.filter((likeId: string) => likeId !== id),
-                        _id: null,
-                        name: null,
-                        email: null
-                    });
-                }else{
-                    updateUser({
-                        liked: [...(likes ?? []), id],
-                        _id: null,
-                        name: null,
-                        email: null
-                    });
-                }
-
+                setLikes(prevLikes => {
+                    if (prevLikes.includes(id)) {
+                        return prevLikes.filter(like => like !== id);
+                    } else {
+                        return [...prevLikes, id];
+                    }
+                });
             } else {
                 console.error('Failed to like twit:', response.statusText);
             }
