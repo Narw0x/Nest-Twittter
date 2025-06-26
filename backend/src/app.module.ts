@@ -39,6 +39,12 @@ import { Like, LikeSchema } from './likes/schemas/like.schema';
     LikesModule,
   ],
   controllers: [AppController],
-  providers: [AppService, UsersService, AuthService, TwitsService, LikesService],
+  providers: [
+    AppService,
+    UsersService,
+    AuthService,
+    TwitsService,
+    LikesService,
+  ],
 })
 export class AppModule {}

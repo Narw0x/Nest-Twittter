@@ -40,7 +40,7 @@ const router = createBrowserRouter([
                 path: "profile",
                 loader: checkAuthToken,
                 children: [
-                    {path: ':id', element: <ProfilePage />},
+                    {path: ':userId', element: <ProfilePage />},
                 ],
             }
         ],

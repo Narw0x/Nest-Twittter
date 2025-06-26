@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuthStore } from "../../store/authStore.ts";
+import { authHeader } from "../../utils/constants.ts";
 
 export const useUpdateTwit = () => {
     const { twitId } = useParams<{ twitId: string }>();
@@ -22,11 +23,7 @@ export const useUpdateTwit = () => {
             setIsLoading(true);
             setError(null);
             try {
-                const response = await axios.get(`http://localhost:4000/twits/${twitId}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
+                const response = await axios.get(`http://localhost:4000/twits/${twitId}`, authHeader(token));
 
                 if (response.status === 200) {
                     setContent(response.data.content);
@@ -57,16 +54,22 @@ export const useUpdateTwit = () => {
         setIsLoading(true);
         setError(null);
 
+        if (!content.trim()) {
+            setError("Content cannot be empty");
+            setIsLoading(false);
+            return;
+        }
+        if (!twitId || !token) {
+            setError("Invalid twit ID or authentication token");
+            setIsLoading(false);
+            return;
+        }
+
         try {
             const response = await axios.put(
                 `http://localhost:4000/twits/${twitId}`,
                 { content },
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
+                authHeader(token),
             );
             if (response.status === 200) {
                 navigate("/twits", { replace: true });

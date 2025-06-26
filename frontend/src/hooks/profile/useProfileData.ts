@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useAuthStore } from "../../store/authStore";
+import { authHeader } from "../../utils/constants";
 
 interface IProfile {
     name: string;
@@ -9,14 +10,14 @@ interface IProfile {
 }
 
 export const useProfilePage = () => {
-    const { id } = useParams<{ id: string }>();
+    const { userId } = useParams<{ userId: string }>();
     const token = useAuthStore((state) => state.token);
     const [profileData, setProfileData] = useState<IProfile | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        if (!id || !token) {
+        if (!userId || !token) {
             setError("Invalid user ID or authentication token");
             setIsLoading(false);
             return;
@@ -26,17 +27,14 @@ export const useProfilePage = () => {
             setIsLoading(true);
             setError(null);
             try {
-                const response = await axios.get(`http://localhost:4000/users/${id}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
+                const response = await axios.get(`http://localhost:4000/users/${userId}`, authHeader(token));
 
-                if (response.status === 200) {
+                if (response.status === 200){
                     setProfileData(response.data);
-                } else {
+                }else{
                     setError("Failed to fetch profile");
                 }
+
             }
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-expect-error
@@ -49,7 +47,7 @@ export const useProfilePage = () => {
         };
 
         fetchProfile();
-    }, [id, token]);
+    }, [userId, token]);
 
     return {
         profileData,

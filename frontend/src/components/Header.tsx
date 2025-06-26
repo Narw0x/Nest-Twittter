@@ -1,5 +1,4 @@
-import {NavLink} from "react-router-dom";
-import React from "react";
+import {NavLink, Link} from "react-router-dom";
 import {useNavigate} from "react-router-dom";
 import {useAuthStore} from "../store/authStore";
 import {useUserStore} from "../store/userStore";
@@ -21,7 +20,7 @@ export default function Header() {
     return (
         <header className="bg-gray-800 text-white p-4">
             <div className="container mx-auto flex justify-between items-center">
-                <a href="/" className="text-xl font-bold">Twit</a>
+                <Link to="/"  className="text-xl font-bold">Twit</Link>
                 <nav className="flex items-center justify-between gap-4">
                     <ul className="flex space-x-4">
                         <li><NavLink to="/about" className={({ isActive }) => (isActive ? 'text-red-500 ' : 'text-white hover:text-red-500')}>About</NavLink></li>

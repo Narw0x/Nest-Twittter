@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useAuthStore } from "../../store/authStore.ts";
+import { authHeader } from "../../utils/constants.ts";
 
 export const useDeleteTwit = () => {
     const token = useAuthStore((state) => state.token);
@@ -17,14 +18,10 @@ export const useDeleteTwit = () => {
         setError(null);
 
         try {
-            const response = await axios.delete(`http://localhost:4000/twits/${twitId}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
+            const response = await axios.delete(`http://localhost:4000/twits/${twitId}`, authHeader(token));
 
             if (response.status === 200) {
-                return true; // Indicate successful deletion
+                return true;
             } else {
                 setError("Failed to delete twit");
                 return false;

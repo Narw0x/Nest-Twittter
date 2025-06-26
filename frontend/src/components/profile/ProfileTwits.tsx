@@ -1,5 +1,6 @@
 import { useProfileTwits } from "../../hooks/profile/useProfileTwits.ts";
 import { useDeleteTwit } from "../../hooks/twits/useDeleteTwit.ts";
+import { Link } from "react-router-dom";
 
 interface Twits {
     _id: string;
@@ -14,15 +15,16 @@ export default function ProfileTwits() {
 
     const handleClickDelete = async (twitId: string) => {
         const success = await handleDelete(twitId);
-        if (success) {
-            setTwits((prevTwits) => prevTwits.filter((twit) => twit._id !== twitId));
+        if (!success) {
+            return;
         }
+        setTwits((prevTwits) => prevTwits.filter((twit) => twit._id !== twitId));
+
     };
 
     return (
         <div className="flex flex-col items-center justify-center gap-4 p-6 bg-gray-100 rounded-lg shadow-md w-full max-w-md">
             <h1 className="text-2xl font-bold mb-4">Profile Twits</h1>
-            <p className="text-gray-600">This is where user twits will be displayed.</p>
             {(isLoading || deleteLoading) && <p className="text-center">Loading...</p>}
             {(error || deleteError) && (
                 <p className="text-red-500 text-center mb-4">{error || deleteError}</p>
@@ -58,7 +60,14 @@ export default function ProfileTwits() {
                     ))}
                 </div>
             ) : (
-                <p className="text-center text-gray-500">No twits available.</p>
+                <>
+                    <p className="text-center text-gray-500">You don't have any Twits</p>
+                    <button>
+                        <Link to="/twits/create" className="text-blue-500 hover:text-blue-600">
+                            Create Twit
+                        </Link>
+                    </button>
+                </>
             )}
         </div>
     );

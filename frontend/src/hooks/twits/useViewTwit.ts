@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuthStore } from "../../store/authStore.ts";
 import { useUserStore } from "../../store/userStore.ts";
+import {authHeader} from "../../utils/constants.ts";
 
 interface Twits {
     _id: string;
@@ -36,11 +37,7 @@ export const useViewTwits = () => {
             setIsLoading(true);
             setError(null);
             try {
-                const response = await axios.get(`http://localhost:4000/likes/${userId}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
+                const response = await axios.get(`http://localhost:4000/likes/${userId}`, authHeader(token));
 
                 if (response.status === 200) {
                     setLikes(response.data);
@@ -70,12 +67,7 @@ export const useViewTwits = () => {
             setIsLoading(true);
             setError(null);
             try {
-                const response = await axios.get("http://localhost:4000/twits", {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-
+                const response = await axios.get("http://localhost:4000/twits", authHeader(token));
                 if (response.status === 200) {
                     setTwits(response.data);
                 } else {

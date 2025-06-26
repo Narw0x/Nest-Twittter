@@ -3,7 +3,6 @@ import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import {isValidEmail, isValidText, isValidPassword} from "../../utils/validation";
 
-
 interface Props {
     name: string;
     email: string;
@@ -30,21 +29,15 @@ export default function RegisterPage(){
         password: false,
         confirmPassword: false,
     });
-
     const navigate = useNavigate();
-
     const [message, setMessage] = useState<string>('')
 
-
-
-
-    const ErrorMessage = {
+    const errorTextMap = {
         name: 'Name must be at least 3 characters long and contain only letters, numbers, and underscores.',
         email: 'Please enter a valid email address.',
         password: 'Password must be at least 6 characters long. It must contain at least one uppercase letter, one lowercase letter, and one number.',
         confirmPassword: 'Passwords do not match.'
     }
-
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { id, value } = e.target;
         setUserInfo(prevState => ({
@@ -53,11 +46,8 @@ export default function RegisterPage(){
         }));
     };
 
-
-
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-
         if(!isValidText(userInfo.name)) {
             setError(prevState => ({
                 ...prevState,
@@ -73,7 +63,6 @@ export default function RegisterPage(){
             }));
             return;
         }
-
         if(!isValidPassword(userInfo.password)) {
             setError(prevState => ({
                 ...prevState,
@@ -83,7 +72,6 @@ export default function RegisterPage(){
             }));
             return;
         }
-
         if(userInfo.password !== userInfo.confirmPassword) {
             setError(prevState => ({
                 ...prevState,
@@ -94,15 +82,12 @@ export default function RegisterPage(){
             }));
             return;
         }
-
         setError({
             name: false,
             email: false,
             password: false,
             confirmPassword: false
         });
-
-
         try {
             axios.post('http://localhost:4000/auth/register', userInfo)
                 .then(response => {
@@ -139,22 +124,22 @@ export default function RegisterPage(){
                 <form className="w-full max-w-md" onSubmit={handleSubmit}>
                     <div className="mb-4">
                         <label htmlFor="name" className="block text-sm font-medium text-gray-700">Username</label>
-                        {error.name && <p className="text-red-500 text-xs mt-1">{ErrorMessage.name}</p>}
+                        {error.name && <p className="text-red-500 text-xs mt-1">{errorTextMap.name}</p>}
                         <input type="text" id="name" name="name" className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" value={userInfo.name} onChange={handleChange} />
                     </div>
                     <div className="mb-4">
                         <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-                        {error.email && <p className="text-red-500 text-xs mt-1">{ErrorMessage.email}</p>}
+                        {error.email && <p className="text-red-500 text-xs mt-1">{errorTextMap.email}</p>}
                         <input type="email" id="email" className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required value={userInfo.email} onChange={handleChange} />
                     </div>
                     <div className="mb-4">
                         <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
-                        {error.password && <p className="text-red-500 text-xs mt-1">{ErrorMessage.password}</p>}
+                        {error.password && <p className="text-red-500 text-xs mt-1">{errorTextMap.password}</p>}
                         <input type="password" id="password" className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required value={userInfo.password} onChange={handleChange} />
                     </div>
                     <div className="mb-4">
                         <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">Confirm Password</label>
-                        {error.confirmPassword && <p className="text-red-500 text-xs mt-1">{ErrorMessage.confirmPassword}</p>}
+                        {error.confirmPassword && <p className="text-red-500 text-xs mt-1">{errorTextMap.confirmPassword}</p>}
                         <input type="password" id="confirmPassword" className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required value={userInfo.confirmPassword} onChange={handleChange} />
                     </div>
                     <button type="submit" className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">Register</button>

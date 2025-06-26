@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useUserStore } from "../../store/userStore";
 import { useAuthStore } from "../../store/authStore";
+import { authHeader } from "../../utils/constants";
 
 interface Twits {
     _id: string;
@@ -12,7 +13,7 @@ interface Twits {
 }
 
 export const useProfileTwits = () => {
-    const id = useUserStore((state) => state._id);
+    const userId = useUserStore((state) => state._id);
     const token = useAuthStore((state) => state.token);
     const navigate = useNavigate();
     const [twits, setTwits] = useState<Twits[]>([]);
@@ -20,7 +21,7 @@ export const useProfileTwits = () => {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        if (!id || !token) {
+        if (!userId || !token) {
             setError("Invalid user ID or authentication token");
             setIsLoading(false);
             return;
@@ -30,11 +31,7 @@ export const useProfileTwits = () => {
             setIsLoading(true);
             setError(null);
             try {
-                const response = await axios.get(`http://localhost:4000/twits/user/${id}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
+                const response = await axios.get(`http://localhost:4000/twits/user/${userId}`, authHeader(token));
 
                 if (response.status === 200) {
                     setTwits(response.data);
@@ -53,7 +50,7 @@ export const useProfileTwits = () => {
         };
 
         fetchUserTwits();
-    }, [id, token]);
+    }, [userId, token]);
 
     const handleClickUpdate = (twitId: string) => {
         navigate(`/twits/update/${twitId}`, { replace: true });
@@ -61,7 +58,7 @@ export const useProfileTwits = () => {
 
     return {
         twits,
-        setTwits, // Exposed to allow updates (e.g., after deletion)
+        setTwits,
         isLoading,
         error,
         handleClickUpdate,
