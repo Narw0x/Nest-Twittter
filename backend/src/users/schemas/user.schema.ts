@@ -12,7 +12,7 @@ export class User {
   email: string;
 
   @Prop({ required: true, min: 6 })
-  password: string;
+  passwordHash: string;
 
   @Prop({ type: [String], default: [] })
   twitIds: string[];

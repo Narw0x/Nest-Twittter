@@ -26,21 +26,22 @@ export class UsersService {
     const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
     const createdUser = new this.userModel({
       ...createUserDto,
-      password: hashedPassword,
+      passwordHash: hashedPassword,
     });
-    const response = await createdUser.save();
-    return response;
+    return await createdUser.save();
   }
 
   async findAll(): Promise<User[]> {
     return this.userModel.find().exec();
   }
 
-  async findOne(id: string): Promise<User> {
+  async findOne(id: string): Promise<User | null> {
     const foundUser = await this.userModel.findOne({ _id: id });
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    //@ts-expect-error
-    return foundUser || null;
+    if (!foundUser) {
+      return null;
+    }
+    foundUser.passwordHash = '';
+    return foundUser;
   }
 
   async findByEmail(email: string): Promise<User | null> {

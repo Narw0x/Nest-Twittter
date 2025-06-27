@@ -13,14 +13,12 @@ interface IResData {
     status: number;
     data: {
         access_token: string;
-        userData: {
-            _doc: {
-                _id: string;
-                name: string;
-                email: string;
-                createdAt: Date;
-                updatedAt: Date;
-            };
+        returnUser: {
+            _id: string;
+            name: string;
+            email: string;
+            createdAt: Date;
+            updatedAt: Date;
         };
     };
 }
@@ -48,8 +46,8 @@ const useLogin = () => {
 
     const success = (res: IResData) => {
         setToken(res.data.access_token);
-        setUser(res.data.userData._doc);
-        navigate("/profile/" + res.data.userData._doc._id, { replace: true });
+        setUser(res.data.returnUser);
+        navigate("/profile/" + res.data.returnUser._id, { replace: true });
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

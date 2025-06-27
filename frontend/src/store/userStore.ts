@@ -19,7 +19,7 @@ export const useUserStore = create<UserState>()(
             _id: null,
             name: null,
             email: null,
-            setUser: ({ _id, name, email,  }) => set({ _id, name, email }),
+            setUser: ({ _id, name, email }) => set({ _id, name, email }),
             updateUser: (user: Partial<User>) => set((state) => ({
                 _id: user._id ?? state._id,
                 name: user.name ?? state.name,
