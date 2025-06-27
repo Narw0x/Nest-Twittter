@@ -11,9 +11,6 @@ export class Twit {
   @Prop({ required: true })
   userId: string;
 
-  @Prop({type: Object, required: true })
-  user: object;
-
   @Prop({ default: Date.now })
   createdAt: Date;
 }

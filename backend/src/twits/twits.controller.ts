@@ -13,6 +13,11 @@ import { TwitsService } from './twits.service';
 import { CreateTwitDto } from './dto/create-twit.dto';
 import { Twit } from './schemas/twit.schema';
 
+interface TwitWithUser extends Omit<Twit, keyof Document> {
+  user?: { email: string; name: string } | null;
+}
+
+
 @Controller('twits')
 @UseGuards(AuthGuard('jwt'))
 export class TwitsController {
@@ -23,7 +28,7 @@ export class TwitsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string): Promise<Twit | null> {
+  findOne(@Param('id') id: string): Promise<TwitWithUser | null> {
     return this.twitsService.findOne(id);
   }
   @Get('user/:userId')
@@ -50,7 +55,6 @@ export class TwitsController {
         statusCode: number;
       }
   > {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return,@typescript-eslint/no-unsafe-call
     return this.twitsService.update(content, id);
   }
   @Delete(':id')

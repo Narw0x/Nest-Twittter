@@ -4,7 +4,9 @@ import { Model } from 'mongoose';
 import { Twit, TwitDocument } from './schemas/twit.schema';
 import { UsersService } from '../users/users.service';
 
-
+interface TwitWithUser extends Omit<Twit, keyof Document> {
+  user?: { email: string; name: string } | null;
+}
 
 @Injectable()
 export class TwitsService {
@@ -30,19 +32,14 @@ export class TwitsService {
         statusCode: 404,
       };
     }
-    const sendUser = {
-      name: user.name,
-      email: user.email,
-    };
 
     const createdTwit = new this.twitModel({
       content,
       userId,
-      user: sendUser,
     });
     await createdTwit.save();
     await this.userService.update(userId, {
-      $push: { twitsId: createdTwit._id },
+      $push: { twitIds: createdTwit._id },
     });
 
     return createdTwit.save();
@@ -76,19 +73,51 @@ export class TwitsService {
       return { message: 'Twit not found' };
     }
     await this.userService.update(twit.userId, {
-      $pull: { twitsId: twit._id },
+      $pull: { twitIds: twit._id },
     });
     return twit;
   }
 
   async findAll(): Promise<Twit[]> {
-    return this.twitModel.find().limit(10).exec();
+    const twits = await this.twitModel.find().limit(10).exec();
+    if (!twits || twits.length === 0) {
+      return [];
+    }
+    return await Promise.all(
+      twits.map(async (twit) => {
+        const user = await this.userService.findOne(twit.userId);
+        return {
+          ...twit.toObject(),
+          user: user ? { email: user.email, name: user.name } : null,
+        };
+      }),
+    );
   }
 
   async findByUser(userId: string): Promise<Twit[]> {
-    return this.twitModel.find({ userId: userId }).exec();
+    const twits = await this.twitModel.find({ userId }).exec();
+    if (!twits || twits.length === 0) {
+      return [];
+    }
+    return await Promise.all(
+      twits.map(async (twit) => {
+        const user = await this.userService.findOne(twit.userId);
+        return {
+          ...twit.toObject(),
+          user: user ? { email: user.email, name: user.name } : null,
+        };
+      }),
+    );
   }
-  async findOne(id: string): Promise<Twit | null> {
-    return this.twitModel.findById({ _id: id }).exec();
+  async findOne(id: string): Promise<TwitWithUser | null> {
+    const twit = await this.twitModel.findById(id).exec();
+    if (!twit) {
+      return null;
+    }
+    const user = await this.userService.findOne(twit.userId);
+    return {
+      ...twit.toObject(),
+      user: user ? { email: user.email, name: user.name } : null,
+    };
   }
 }
