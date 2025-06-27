@@ -41,7 +41,8 @@ export const useCreateTwit = () => {
                 authHeader(token),
             );
             if (response.status !== 201) {
-                throw new Error("Failed to create twit");
+                setError("Failed to create twit");
+                return;
             }
             setContent("");
             setIsLoading(false);

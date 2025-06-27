@@ -38,7 +38,6 @@ export const useViewTwits = () => {
             setError(null);
             try {
                 const response = await axios.get(`http://localhost:4000/likes/${userId}`, authHeader(token));
-
                 if (response.status === 200) {
                     setLikes(response.data);
                 } else {

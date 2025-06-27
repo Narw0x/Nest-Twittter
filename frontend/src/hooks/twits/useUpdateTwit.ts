@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuthStore } from "../../store/authStore.ts";
 import { authHeader } from "../../utils/constants.ts";
+import {isValidText} from "../../utils/validation.ts";
 
 export const useUpdateTwit = () => {
     const { twitId } = useParams<{ twitId: string }>();
@@ -54,7 +55,7 @@ export const useUpdateTwit = () => {
         setIsLoading(true);
         setError(null);
 
-        if (!content.trim()) {
+        if (!isValidText(content)) {
             setError("Content cannot be empty");
             setIsLoading(false);
             return;

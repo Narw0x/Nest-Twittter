@@ -54,6 +54,12 @@ const useLogin = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setErrorMessage('');
+
+        if (!userInfo.email || !userInfo.password) {
+            setErrorMessage("Email and password are required.");
+            return;
+        }
 
         try {
             const response = await axios.post('http://localhost:4000/auth/login', userInfo);
