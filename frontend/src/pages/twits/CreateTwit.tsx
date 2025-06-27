@@ -1,4 +1,4 @@
-import { useCreateTwit } from "../../hooks/twits/useCreateTwit.ts";
+import { useCreateTwit } from "./hooks/useCreateTwit.ts";
 
 export default function CreateTwit() {
     const { content, handleChange, handleSubmit } = useCreateTwit();

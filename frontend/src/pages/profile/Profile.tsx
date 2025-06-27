@@ -1,4 +1,4 @@
-import { useProfilePage } from "../../hooks/profile/useProfileData.ts";
+import { useProfilePage } from "./hooks/useProfileData.ts";
 import ProfileTwits from "../../components/profile/ProfileTwits";
 
 export default function ProfilePage() {

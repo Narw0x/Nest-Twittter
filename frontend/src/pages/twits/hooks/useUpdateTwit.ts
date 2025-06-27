@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useAuthStore } from "../../store/authStore.ts";
-import { authHeader } from "../../utils/constants.ts";
-import {isValidText} from "../../utils/validation.ts";
+import { useAuthStore } from "../../../store/authStore.ts";
+import { authHeader } from "../../../utils/constants.ts";
+import {isValidText} from "../../../utils/validation.ts";
 
 export const useUpdateTwit = () => {
     const { twitId } = useParams<{ twitId: string }>();

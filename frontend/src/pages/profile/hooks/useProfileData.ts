@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { useAuthStore } from "../../store/authStore";
-import { authHeader } from "../../utils/constants";
+import { useAuthStore } from "../../../store/authStore.ts";
+import { authHeader } from "../../../utils/constants.ts";
 
 interface IProfile {
     name: string;

@@ -1,4 +1,4 @@
-import { useViewTwits } from "../../hooks/twits/useViewTwit.ts";
+import { useViewTwits } from "./hooks/useViewTwit.ts";
 
 interface Twits {
     _id: string;

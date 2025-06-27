@@ -1,4 +1,4 @@
-import { useUpdateTwit } from "../../hooks/twits/useUpdateTwit.ts";
+import { useUpdateTwit } from "./hooks/useUpdateTwit.ts";
 
 export default function UpdateTwit() {
     const { content, handleChange, handleSubmit, isLoading, error } = useUpdateTwit();

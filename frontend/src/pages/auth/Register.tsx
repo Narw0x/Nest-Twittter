@@ -1,4 +1,4 @@
-import useRegister from "../../hooks/auth/useRegister.ts";
+import useRegister from "./hooks/useRegister.ts";
 
 
 export default function RegisterPage() {

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
-import { useAuthStore } from "../../store/authStore.ts";
-import { authHeader } from "../../utils/constants.ts";
+import { useAuthStore } from "../../../store/authStore.ts";
+import { authHeader } from "../../../utils/constants.ts";
 
 export const useDeleteTwit = () => {
     const token = useAuthStore((state) => state.token);

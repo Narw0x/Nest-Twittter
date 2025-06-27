@@ -1,7 +1,7 @@
 import React, { useState} from "react";
 import { useNavigate } from "react-router-dom";
 import axios, { AxiosError } from "axios";
-import { isValidEmail, isValidText, isValidPassword } from "../../utils/validation";
+import { isValidEmail, isValidText, isValidPassword } from "../../../utils/validation.ts";
 
 interface Props {
     name: string;

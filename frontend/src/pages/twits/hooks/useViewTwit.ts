@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useAuthStore } from "../../store/authStore.ts";
-import { useUserStore } from "../../store/userStore.ts";
-import {authHeader} from "../../utils/constants.ts";
+import { useAuthStore } from "../../../store/authStore.ts";
+import { useUserStore } from "../../../store/userStore.ts";
+import {authHeader} from "../../../utils/constants.ts";
 
 interface Twits {
     _id: string;

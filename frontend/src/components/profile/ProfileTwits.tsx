@@ -1,5 +1,5 @@
-import { useProfileTwits } from "../../hooks/profile/useProfileTwits.ts";
-import { useDeleteTwit } from "../../hooks/twits/useDeleteTwit.ts";
+import { useProfileTwits } from "../../pages/profile/hooks/useProfileTwits.ts";
+import { useDeleteTwit } from "../../pages/twits/hooks/useDeleteTwit.ts";
 import { Link } from "react-router-dom";
 
 interface Twits {

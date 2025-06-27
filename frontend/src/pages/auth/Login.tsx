@@ -1,4 +1,4 @@
-import useLogin from "../../hooks/auth/useLogin.ts";
+import useLogin from "./hooks/useLogin.ts";
 
 
 export default function LoginPage() {
