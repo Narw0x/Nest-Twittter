@@ -1,9 +1,9 @@
 import useRegister from "./hooks/useRegister.ts";
+import Input from "../../components/Input.tsx";
 
 
 export default function RegisterPage() {
     const { userInfo, error, message, errorTextMap, handleChange, handleSubmit } = useRegister();
-
     return (
         <section className="flex items-center justify-center min-h-screen bg-gray-100">
             <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
@@ -11,54 +11,10 @@ export default function RegisterPage() {
                 <p className="text-gray-500 mb-4 text-center">Create a new account to start twitting.</p>
                 {message && <p className="text-center text-red-500 mb-4">{message}</p>}
                 <form className="w-full max-w-md" onSubmit={handleSubmit}>
-                    <div className="mb-4">
-                        <label htmlFor="name" className="block text-sm font-medium text-gray-700">Username</label>
-                        {error.name && <p className="text-red-500 text-xs mt-1">{errorTextMap.name}</p>}
-                        <input
-                            type="text"
-                            id="name"
-                            name="name"
-                            className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                            value={userInfo.name}
-                            onChange={handleChange}
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-                        {error.email && <p className="text-red-500 text-xs mt-1">{errorTextMap.email}</p>}
-                        <input
-                            type="email"
-                            id="email"
-                            className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                            required
-                            value={userInfo.email}
-                            onChange={handleChange}
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
-                        {error.password && <p className="text-red-500 text-xs mt-1">{errorTextMap.password}</p>}
-                        <input
-                            type="password"
-                            id="password"
-                            className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                            required
-                            value={userInfo.password}
-                            onChange={handleChange}
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">Confirm Password</label>
-                        {error.confirmPassword && <p className="text-red-500 text-xs mt-1">{errorTextMap.confirmPassword}</p>}
-                        <input
-                            type="password"
-                            id="confirmPassword"
-                            className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                            required
-                            value={userInfo.confirmPassword}
-                            onChange={handleChange}
-                        />
-                    </div>
+                    <Input value={userInfo.name} name={'Name'} handleChange={handleChange} error={error.name} errorTextMap={errorTextMap.name} id={'name'} />
+                    <Input value={userInfo.email} name={'Email'} handleChange={handleChange} error={error.email} errorTextMap={errorTextMap.email} id={'email'} />
+                    <Input value={userInfo.password} name={'Password'} handleChange={handleChange} error={error.password} errorTextMap={errorTextMap.password} id={'password'} />
+                    <Input value={userInfo.confirmPassword} name={'Confirm password'} handleChange={handleChange} error={error.confirmPassword} errorTextMap={errorTextMap.confirmPassword} id={'confirmPassword'} />
                     <button type="submit" className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
                         Register
                     </button>

@@ -43,6 +43,7 @@ const useRegister = () => {
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        console.log('e.target', e.target);
         const { id, value } = e.target;
         setUserInfo(prevState => ({
             ...prevState,
