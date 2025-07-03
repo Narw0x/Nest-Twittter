@@ -1,21 +1,23 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
 export type UserDocument = User & Document;
 
-@Schema()
+@Schema({ timestamps: true })
 export class User {
-  @Prop({ required: true, min: 3, max: 50 })
+  @IsString()
+  @IsNotEmpty()
   name: string;
 
-  @Prop({ required: true, unique: true })
+  @IsEmail()
+  @IsString()
+  @IsNotEmpty()
   email: string;
 
-  @Prop({ required: true, min: 6 })
+  @IsString()
+  @IsNotEmpty()
   passwordHash: string;
-
-  @Prop({ type: [String], default: [] })
-  twitIds: string[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

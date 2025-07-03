@@ -81,8 +81,14 @@ const useRegister = () => {
             confirmPassword: false
         });
 
+        const sendData = {
+            name: userInfo.name,
+            email: userInfo.email,
+            password: userInfo.password
+        }
+
         try {
-            const response = await axios.post('http://localhost:4000/auth/register', userInfo);
+            const response = await axios.post('http://localhost:4000/auth/register', sendData);
             if (response.status === 201) {
                 if (response.data.statusCode === 400) {
                     setMessage(response.data.message);

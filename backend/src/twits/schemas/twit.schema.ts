@@ -1,18 +1,18 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document, Types } from 'mongoose';
+import { IsNotEmpty, IsMongoId, IsString } from 'class-validator';
 
 export type TwitDocument = Twit & Document;
 
-@Schema()
+@Schema({timestamps: true})
 export class Twit {
-  @Prop({ required: true, min: 1, max: 280 })
+  @IsNotEmpty()
+  @IsString()
   content: string;
 
-  @Prop({ required: true })
-  userId: string;
-
-  @Prop({ default: Date.now })
-  createdAt: Date;
+  @IsNotEmpty()
+  @IsMongoId()
+  userId: Types.ObjectId;
 }
 
 export const TwitSchema = SchemaFactory.createForClass(Twit);

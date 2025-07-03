@@ -4,7 +4,6 @@ export default interface IUser {
   email: string;
   password?: string;
   passwordHash?: string;
-  twitIds?: string[];
   createdAt?: Date;
   updatedAt?: Date;
 }

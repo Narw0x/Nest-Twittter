@@ -1,11 +1,11 @@
-import { IsString, IsNotEmpty } from 'class-validator';
+import { IsString, IsNotEmpty, IsMongoId } from 'class-validator';
 
 export class CreateTwitDto {
   @IsString()
   @IsNotEmpty()
   content: string;
 
-  @IsString()
+  @IsMongoId()
   @IsNotEmpty()
   userId: string;
 }

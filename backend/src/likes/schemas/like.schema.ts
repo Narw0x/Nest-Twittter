@@ -1,18 +1,19 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Schema, SchemaFactory } from '@nestjs/mongoose';
+import { IsNotEmpty, IsMongoId } from 'class-validator';
+import { Document, Types } from 'mongoose';
+
 
 export type LikeDocument = Like & Document;
 
-@Schema()
+@Schema({ timestamps: true })
 export class Like {
-  @Prop({ required: true })
-  twitId: string;
+  @IsNotEmpty()
+  @IsMongoId()
+  twitId: Types.ObjectId;
 
-  @Prop({ required: true })
-  userId: string;
-
-  @Prop({ default: Date.now })
-  createdAt: Date;
+  @IsNotEmpty()
+  @IsMongoId()
+  userId: Types.ObjectId;
 }
 
 export const LikeSchema = SchemaFactory.createForClass(Like);

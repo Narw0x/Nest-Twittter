@@ -39,10 +39,6 @@ export class TwitsService {
       userId,
     });
     await createdTwit.save();
-    await this.userService.update(userId, {
-      $push: { twitIds: createdTwit._id },
-    });
-
     return createdTwit.save();
   }
 
@@ -73,15 +69,12 @@ export class TwitsService {
     if (!twit) {
       return { message: 'Twit not found' };
     }
-    await this.userService.update(twit.userId, {
-      $pull: { twitIds: twit._id },
-    });
     return twit;
   }
 
   async findAll(): Promise<Twit[]> {
     const twits = await this.twitModel.find().limit(10).exec();
-    if (!twits || twits.length === 0) {
+    if (!twits) {
       return [];
     }
     return await Promise.all(
@@ -97,7 +90,7 @@ export class TwitsService {
 
   async findByUser(userId: string): Promise<Twit[]> {
     const twits = await this.twitModel.find({ userId }).exec();
-    if (!twits || twits.length === 0) {
+    if (!twits) {
       return [];
     }
     return await Promise.all(
