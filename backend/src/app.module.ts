@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { JwtModule } from '@nestjs/jwt';
+
+import { AppController } from './app.controller';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersService } from './users/users.service';
 import { AuthService } from './auth/auth.service';
 import { User, UserSchema } from './users/schemas/user.schema';
-import { JwtModule } from '@nestjs/jwt';
 import { TwitsModule } from './twits/twits.module';
 import { TwitsService } from './twits/twits.service';
 import { Twit, TwitSchema } from './twits/schemas/twit.schema';
@@ -40,7 +40,6 @@ import { Like, LikeSchema } from './likes/schemas/like.schema';
   ],
   controllers: [AppController],
   providers: [
-    AppService,
     UsersService,
     AuthService,
     TwitsService,

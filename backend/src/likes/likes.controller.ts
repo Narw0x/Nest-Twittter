@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
-import { LikesService } from './likes.service';
 import { AuthGuard } from '@nestjs/passport';
+import { LikesService } from './likes.service';
 
 @Controller('likes')
 @UseGuards(AuthGuard('jwt'))

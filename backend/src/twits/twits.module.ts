@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
+
 import { TwitsService } from './twits.service';
 import { TwitsController } from './twits.controller';
 import { UsersService } from '../users/users.service';
-import { MongooseModule } from '@nestjs/mongoose';
 import { Twit, TwitSchema } from './schemas/twit.schema';
 import { UsersModule } from '../users/users.module';
 import { User, UserSchema } from '../users/schemas/user.schema';

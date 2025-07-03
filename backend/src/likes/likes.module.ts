@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
+
 import { LikesController } from './likes.controller';
 import { LikesService } from './likes.service';
-import { MongooseModule } from '@nestjs/mongoose';
 import { Like, LikeSchema } from './schemas/like.schema';
 
 @Module({
