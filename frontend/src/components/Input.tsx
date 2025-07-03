@@ -9,7 +9,7 @@ interface InputProps {
     id: string;
 }
 
-export default function Input({ error, errorTextMap, value, name, handleChange, id }: InputProps) {
+export default function Input({ error = false, errorTextMap = '', value, name, handleChange, id }: InputProps) {
     const inputType = id === 'password' || id === 'confirmPassword' ? 'password' : 'text';
 
     return (
