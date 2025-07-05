@@ -1,4 +1,5 @@
 import { IsString, IsNotEmpty, IsMongoId } from 'class-validator';
+import { Types } from 'mongoose';
 
 export class CreateTwitDto {
   @IsString()
@@ -7,5 +8,5 @@ export class CreateTwitDto {
 
   @IsMongoId()
   @IsNotEmpty()
-  userId: string;
+  userId: Types.ObjectId;
 }

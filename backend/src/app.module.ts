@@ -8,13 +8,13 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersService } from './users/users.service';
 import { AuthService } from './auth/auth.service';
-import { User, UserSchema } from './users/schemas/user.schema';
+import { User, UserSchema } from './users/user.schema';
 import { TwitsModule } from './twits/twits.module';
 import { TwitsService } from './twits/twits.service';
-import { Twit, TwitSchema } from './twits/schemas/twit.schema';
+import { Twit, TwitSchema } from './twits/twit.schema';
 import { LikesModule } from './likes/likes.module';
 import { LikesService } from './likes/likes.service';
-import { Like, LikeSchema } from './likes/schemas/like.schema';
+import { Like, LikeSchema } from './likes/like.schema';
 
 @Module({
   imports: [

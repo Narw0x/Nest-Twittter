@@ -3,13 +3,14 @@ import {
   Get,
   Body,
   Param,
-  Put,
+  Patch,
   Delete,
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { UsersService } from './users.service';
-import { User } from './schemas/user.schema';
+import { User } from './user.schema';
+import { Types } from 'mongoose';
 
 @Controller('users')
 @UseGuards(AuthGuard('jwt'))
@@ -22,20 +23,20 @@ export class UsersController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<User | null> {
+  async findOne(@Param('id') id: Types.ObjectId): Promise<User | null> {
     return this.usersService.findOne(id);
   }
 
-  @Put(':id')
+  @Patch(':id')
   async update(
-    @Param('id') id: string,
-    @Body() updateUserDto: { name?: string; email?: string; age?: number },
+    @Param('id') id: Types.ObjectId,
+    @Body() updateUserDto: { name?: string; email?: string },
   ) {
     return this.usersService.update(id, updateUserDto);
   }
 
   @Delete(':id')
-  async delete(@Param('id') id: string) {
+  async delete(@Param('id') id: Types.ObjectId) {
     return this.usersService.delete(id);
   }
 }

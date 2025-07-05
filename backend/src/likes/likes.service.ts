@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { Like } from './schemas/like.schema';
+import { Model, Types } from 'mongoose';
+import { Like } from './like.schema';
 
 @Injectable()
 export class LikesService {
   constructor(@InjectModel(Like.name) private likeModel: Model<Like>) {}
 
   async likeTwit(
-    twitId: string,
-    userId: string,
+    twitId: Types.ObjectId,
+    userId: Types.ObjectId,
   ): Promise<{ message: string; statusCode: number }> {
     const isLiked = await this.likeModel.exists({ twitId, userId });
     if (isLiked) {
@@ -22,7 +22,7 @@ export class LikesService {
     }
   }
 
-  async getUserLikes(userId: string): Promise<string[]> {
+  async getUserLikes(userId: Types.ObjectId): Promise<Types.ObjectId[]> {
     const likes = await this.likeModel.find({ userId }).exec();
     return likes.map((like) => like.twitId);
   }

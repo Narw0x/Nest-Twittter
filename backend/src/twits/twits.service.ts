@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
+import { NotFoundException } from '@nestjs/common/exceptions';
 
-import { Twit, TwitDocument } from './schemas/twit.schema';
+import { Twit, TwitDocument } from './twit.schema';
 import { UsersService } from '../users/users.service';
+import { UserWithTwits } from './interfaces/userWithTwits.interface';
+import { TwitsWithUsers } from './interfaces/twitsWithUsers';
 
-interface TwitWithUser extends Omit<Twit, keyof Document> {
-  user?: { email: string; name: string } | null;
-}
 
 @Injectable()
 export class TwitsService {
@@ -18,100 +18,94 @@ export class TwitsService {
 
   async create(
     content: string,
-    userId: string,
-  ): Promise<Twit | { message: string; statusCode: number }> {
-    if (content.length < 1 || content.length > 280) {
-      return {
-        message: 'Content must be between 1 and 280 characters',
-        statusCode: 400,
-      };
-    }
+    userId: Types.ObjectId,
+  ): Promise<Twit> {
     const user = await this.userService.findOne(userId);
     if (!user) {
-      return {
-        message: 'Author not found',
-        statusCode: 404,
-      };
+      throw new NotFoundException('User not found');
     }
-
     const createdTwit = new this.twitModel({
       content,
       userId,
     });
     await createdTwit.save();
-    return createdTwit.save();
+    return createdTwit;
   }
 
   async update(
     content: string,
-    id: string,
-  ): Promise<Twit | { message: string; statusCode: number }> {
-    if (content.length < 1 || content.length > 280) {
-      return {
-        message: 'Content must be between 1 and 280 characters',
-        statusCode: 400,
-      };
-    }
+    id: Types.ObjectId,
+  ): Promise<Twit> {
     const twit = await this.twitModel.findById({ _id: id }).exec();
     if (!twit) {
-      return {
-        message: 'Twit not found',
-        statusCode: 404,
-      };
+      throw new NotFoundException('Twit not found');
     }
     twit.content = content;
     await twit.save();
     return twit;
   }
 
-  async delete(id: string): Promise<Twit | { message: string }> {
+  async delete(id: Types.ObjectId): Promise<Twit> {
     const twit = await this.twitModel.findByIdAndDelete(id).exec();
     if (!twit) {
-      return { message: 'Twit not found' };
+      throw new NotFoundException('Twit not found');
     }
     return twit;
   }
 
-  async findAll(): Promise<Twit[]> {
+  async findAll(): Promise<TwitsWithUsers[]> {
     const twits = await this.twitModel.find().limit(10).exec();
-    if (!twits) {
-      return [];
+
+    if (!twits || twits.length === 0) {
+      throw new NotFoundException('No twits found');
     }
-    return await Promise.all(
-      twits.map(async (twit) => {
+
+    return Promise.all(
+      twits.map(async (twit: Twit) => {
         const user = await this.userService.findOne(twit.userId);
+        if (!user) {
+          throw new NotFoundException(`User not found for twit`);
+        }
         return {
-          ...twit.toObject(),
-          user: user ? { email: user.email, name: user.name } : null,
+          twit: twit,
+          user: {
+            email: user.email,
+            name: user.name,
+          },
         };
-      }),
+      })
     );
   }
 
-  async findByUser(userId: string): Promise<Twit[]> {
+  async findByUser(userId: Types.ObjectId): Promise<UserWithTwits> {
     const twits = await this.twitModel.find({ userId }).exec();
-    if (!twits) {
-      return [];
+    const user = await this.userService.findOne(userId);
+    if (!user) {
+      throw new NotFoundException('User not found');
     }
-    return await Promise.all(
-      twits.map(async (twit) => {
-        const user = await this.userService.findOne(twit.userId);
-        return {
-          ...twit.toObject(),
-          user: user ? { email: user.email, name: user.name } : null,
-        };
-      }),
-    );
+    if (!twits || twits.length === 0) {
+      return {
+        user,
+        twits: [],
+      };
+    }
+    return {
+      user,
+      twits
+    }
   }
-  async findOne(id: string): Promise<TwitWithUser | null> {
+  async findOne(id: Types.ObjectId): Promise<UserWithTwits> {
     const twit = await this.twitModel.findById(id).exec();
     if (!twit) {
-      return null;
+      throw new NotFoundException('Twit not found');
     }
     const user = await this.userService.findOne(twit.userId);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
     return {
-      ...twit.toObject(),
-      user: user ? { email: user.email, name: user.name } : null,
+      user,
+      twits: [twit],
     };
   }
 }

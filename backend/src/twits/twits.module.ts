@@ -4,9 +4,9 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { TwitsService } from './twits.service';
 import { TwitsController } from './twits.controller';
 import { UsersService } from '../users/users.service';
-import { Twit, TwitSchema } from './schemas/twit.schema';
+import { Twit, TwitSchema } from './twit.schema';
 import { UsersModule } from '../users/users.module';
-import { User, UserSchema } from '../users/schemas/user.schema';
+import { User, UserSchema } from '../users/user.schema';
 
 @Module({
   imports: [

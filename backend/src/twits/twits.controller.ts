@@ -11,11 +11,10 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { TwitsService } from './twits.service';
 import { CreateTwitDto } from './dto/create-twit.dto';
-import { Twit } from './schemas/twit.schema';
-
-interface TwitWithUser extends Omit<Twit, keyof Document> {
-  user?: { email: string; name: string } | null;
-}
+import { Twit } from './twit.schema';
+import { Types } from 'mongoose';
+import { UserWithTwits } from './interfaces/userWithTwits.interface';
+import { TwitsWithUsers } from './interfaces/twitsWithUsers';
 
 
 @Controller('twits')
@@ -23,22 +22,22 @@ interface TwitWithUser extends Omit<Twit, keyof Document> {
 export class TwitsController {
   constructor(private readonly twitsService: TwitsService) {}
   @Get()
-  findAll(): [Twit] | Promise<Twit[]> {
+  findAll(): Promise<TwitsWithUsers[]> {
     return this.twitsService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string): Promise<TwitWithUser | null> {
+  findOne(@Param('id') id: Types.ObjectId): Promise<UserWithTwits> {
     return this.twitsService.findOne(id);
   }
   @Get('user/:userId')
-  findByUser(@Param('userId') userId: string): Promise<Twit[]> {
+  findByUser(@Param('userId') userId: Types.ObjectId): Promise<UserWithTwits> {
     return this.twitsService.findByUser(userId);
   }
   @Post('create')
   async create(
     @Body() createTwitDto: CreateTwitDto,
-  ): Promise<Twit | { message: string; statusCode: number }> {
+  ): Promise<Twit> {
     return await this.twitsService.create(
       createTwitDto.content,
       createTwitDto.userId,
@@ -46,19 +45,13 @@ export class TwitsController {
   }
   @Put(':id')
   update(
-    @Param('id') id: string,
+    @Param('id') id: Types.ObjectId,
     @Body('content') content: string,
-  ): Promise<
-    | Twit
-    | {
-        message: string;
-        statusCode: number;
-      }
-  > {
+  ): Promise<Twit> {
     return this.twitsService.update(content, id);
   }
   @Delete(':id')
-  delete(@Param('id') id: string): Promise<Twit | { message: string }> {
+  delete(@Param('id') id: Types.ObjectId): Promise<Twit> {
     return this.twitsService.delete(id);
   }
 }

@@ -3,7 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 import { LikesController } from './likes.controller';
 import { LikesService } from './likes.service';
-import { Like, LikeSchema } from './schemas/like.schema';
+import { Like, LikeSchema } from './like.schema';
 
 @Module({
     imports: [
