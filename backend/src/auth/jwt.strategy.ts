@@ -3,28 +3,29 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
+import { NotFoundException } from '@nestjs/common/exceptions';
 import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
     private usersService: UsersService,
-    private readonly configService: ConfigService,
+    configService: ConfigService,
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: configService.get<string>('JWT_SECRET') || '00000000000000000000000000000000',
+      secretOrKey:
+        configService.get<string>('JWT_SECRET') ||
+        '00000000000000000000000000000000',
     });
   }
 
-  async validate(payload: any) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-argument
-    const user = await this.usersService.findOne(payload.sub);
+  async validate(payload: { email: string; sub: string }) {
+    const user = await this.usersService.findByEmail(payload.email);
     if (!user) {
-      return null;
+      throw new NotFoundException('Invalid email or password');
     }
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
-    return { id: payload.sub, email: payload.email };
+    return { _id: user._id, name: user.name, email: user.email };
   }
 }
