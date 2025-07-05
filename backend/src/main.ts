@@ -1,27 +1,16 @@
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { ValidationPipe } from '@nestjs/common';
+import { Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 
 import { AppModule } from './app.module';
+import { setupCors } from './utils/setupCors';
+import { setupValidationPipe } from './utils/setupPipes';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.enableCors({
-    origin: '*',
-    methods: ['GET', 'PUT', 'PATCH', 'POST', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
-    credentials: true,
-  });
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
-      transform: true,
-      forbidNonWhitelisted: true,
-      transformOptions: {
-        enableImplicitConversion: true,
-      },
-    }),
-  );
+  setupCors(app)
+  setupValidationPipe(app)
   const config = new DocumentBuilder()
     .setTitle('Twits API')
     .setDescription('API documentation for Twits application')
@@ -30,7 +19,13 @@ async function bootstrap() {
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory);
-  await app.listen(process.env.PORT ?? 4000);
+  const configService = app.get(ConfigService);
+  const port: string = configService.get<string>('PORT', '4000');
+  await app.listen(port, () => {
+    Logger.log(`Listening at http://127.0.0.1:${port}/`);
+    Logger.log(`===================================`);
+  });
+
 }
 bootstrap().catch((error) => {
   console.error('Bootstrap failed:', error);
