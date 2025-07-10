@@ -15,6 +15,8 @@ import { Twit, TwitSchema } from './twits/twit.schema';
 import { LikesModule } from './likes/likes.module';
 import { LikesService } from './likes/likes.service';
 import { Like, LikeSchema } from './likes/like.schema';
+import { AdminModule } from './admin/admin.module';
+import { AdminService } from './admin/admin.service';
 
 @Module({
   imports: [
@@ -37,6 +39,7 @@ import { Like, LikeSchema } from './likes/like.schema';
     JwtModule,
     TwitsModule,
     LikesModule,
+    AdminModule,
   ],
   controllers: [AppController],
   providers: [
@@ -44,6 +47,7 @@ import { Like, LikeSchema } from './likes/like.schema';
     AuthService,
     TwitsService,
     LikesService,
+    AdminService,
   ],
 })
 export class AppModule {}

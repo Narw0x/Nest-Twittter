@@ -10,7 +10,7 @@ import {
 
 import { User, UserDocument } from './user.schema';
 import { CreateUserDto } from './dto/create-user.dto';
-import { updateUserDto } from './dto/update-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -60,22 +60,63 @@ export class UsersService {
     return this.userModel.findOne({ email }).exec();
   }
 
-  async update(
-    id: Types.ObjectId,
-    updateUserDto: updateUserDto | UpdateQuery<User>,
-  ) {
-    return this.userModel
-      .findByIdAndUpdate(id, updateUserDto, { new: true })
-      .exec();
+  async update(id: Types.ObjectId, updateUserDto: UpdateUserDto) {
+    const user = await this.userModel.findById(id).exec();
+    if (!user) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
+
+    // Only include fields that are being updated
+    const updateData: Partial<UpdateUserDto> = {
+      name: user.name,
+      email: user.email,
+      passwordHash: user.passwordHash,
+    };
+
+    if (updateUserDto.name) {
+      updateData.name = updateUserDto.name;
+    }
+
+    if (updateUserDto.email) {
+      await this.checkEmailExists(updateUserDto.email, id);
+      updateData.email = updateUserDto.email;
+    }
+
+    if (updateUserDto.password) {
+      updateData.passwordHash = await bcrypt.hash(updateUserDto.password, 10);
+    }
+
+    try {
+      const updatedUser = await this.userModel.findByIdAndUpdate(
+        id,
+        { $set: updateData },
+        { new: true, runValidators: true }
+      ).exec();
+
+      console.log(`Updated user: ${JSON.stringify(updatedUser)}`);
+
+      if (!updatedUser) {
+        throw new NotFoundException(`User with ID not found`);
+      }
+
+      // Remove sensitive data before returning
+      updatedUser.passwordHash = '';
+      return updatedUser;
+    } catch (e) {
+      if (e instanceof ConflictException) {
+        throw e;
+      }
+      throw new InternalServerErrorException('Failed to update user');
+    }
   }
 
   async delete(id: Types.ObjectId): Promise<User | null> {
     return this.userModel.findByIdAndDelete(id).exec();
   }
 
-  private async checkEmailExists(email: string): Promise<void> {
+  private async checkEmailExists(email: string, id: Types.ObjectId | null = null): Promise<void> {
     const existingUser = await this.userModel.findOne({ email }).exec();
-    if (existingUser) {
+    if (existingUser && (!id || existingUser._id.toString() !== id.toString())) {
       throw new ConflictException('User with this email already exists');
     }
   }

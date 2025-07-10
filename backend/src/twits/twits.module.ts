@@ -16,5 +16,6 @@ import { User, UserSchema } from '../users/user.schema';
   ],
   providers: [TwitsService, UsersService],
   controllers: [TwitsController],
+  exports: [TwitsService],
 })
 export class TwitsModule {}

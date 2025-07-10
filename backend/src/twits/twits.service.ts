@@ -108,4 +108,20 @@ export class TwitsService {
       twits: [twit],
     };
   }
+
+  async findAllTwits(): Promise<Twit[]> {
+    const twits = await this.twitModel.find().exec();
+    if (!twits || twits.length === 0) {
+      throw new NotFoundException('No twits found');
+    }
+    return twits;
+  }
+
+  async findTwitById(id: Types.ObjectId): Promise<Twit> {
+    const twit = await this.twitModel.findById(id).exec();
+    if (!twit) {
+      throw new NotFoundException('Twit not found');
+    }
+    return twit;
+  }
 }
