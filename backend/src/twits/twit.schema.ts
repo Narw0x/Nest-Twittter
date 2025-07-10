@@ -1,16 +1,16 @@
-import { Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
-import { IsNotEmpty, IsMongoId, IsString } from 'class-validator';
+import { IsMongoId, IsString } from 'class-validator';
 
 export type TwitDocument = Twit & Document;
 
-@Schema({timestamps: true})
+@Schema({ timestamps: true })
 export class Twit {
-  @IsNotEmpty()
+  @Prop({ required: true })
   @IsString()
   content: string;
 
-  @IsNotEmpty()
+  @Prop({ type: Types.ObjectId, ref: 'User', required: true })
   @IsMongoId()
   userId: Types.ObjectId;
 }

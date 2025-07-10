@@ -45,11 +45,11 @@ export class AdminController {
   findTwitById(@Param('id') id: Types.ObjectId) {
     return this.twitsService.findTwitById(id);
   }
-  @Post('twits/create')
+  @Post('twits')
   async createTwit(@Body('content') content: string, @Body('userId') userId: Types.ObjectId) {
     return this.twitsService.create(content, userId);
   }
-  @Patch('twits/:id/edit')
+  @Patch('twits/:id')
   async editTwit(
     @Param('id') id: Types.ObjectId,
     @Body('content') content: string,

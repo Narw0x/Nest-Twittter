@@ -16,26 +16,28 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
-  async create(createUserDto: CreateUserDto): Promise<User> {
-    // Check for existing user first
-    await this.checkEmailExists(createUserDto.email);
+  async create(
+    createUserDto: CreateUserDto,
+  ): Promise<User | { message: string; statusCode: number }> {
+    // Check if the user already exists
+    console.log(createUserDto);
 
-    try {
-      // Hash the password
-      const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
-      // Create new user
-      const createdUser = new this.userModel({
-        ...createUserDto,
-        passwordHash: hashedPassword,
-      });
-      // Save and return the user
-      return await createdUser.save();
-    } catch (error) {
-      if (error instanceof ConflictException) {
-        throw error;
-      }
-      throw new InternalServerErrorException('Failed to create user');
+    const existingUser = await this.userModel
+      .findOne({ email: createUserDto.email })
+      .exec();
+    if (existingUser) {
+      return {
+        message: 'User with this email already exists',
+        statusCode: 400,
+      };
     }
+    const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
+    const createdUser = new this.userModel({
+      ...createUserDto,
+      passwordHash: hashedPassword,
+    });
+    const response = await createdUser.save();
+    return response;
   }
 
   async findAll(): Promise<User[]> {
@@ -60,54 +62,24 @@ export class UsersService {
     return this.userModel.findOne({ email }).exec();
   }
 
-  async update(id: Types.ObjectId, updateUserDto: UpdateUserDto) {
-    const user = await this.userModel.findById(id).exec();
-    if (!user) {
-      throw new NotFoundException(`User with ID ${id} not found`);
+  async update(
+    id: Types.ObjectId,
+    updateUserDto: UpdateUserDto | UpdateQuery<User>,
+  ) {
+
+    const hashedPassword = await bcrypt.hash(updateUserDto.password, 10);
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unused-vars
+    const {password, ...updateDataWithoutPassword} = updateUserDto;
+
+    const updateData = {
+    ...updateDataWithoutPassword,
+      passwordHash: hashedPassword,
     }
 
-    // Only include fields that are being updated
-    const updateData: Partial<UpdateUserDto> = {
-      name: user.name,
-      email: user.email,
-      passwordHash: user.passwordHash,
-    };
-
-    if (updateUserDto.name) {
-      updateData.name = updateUserDto.name;
-    }
-
-    if (updateUserDto.email) {
-      await this.checkEmailExists(updateUserDto.email, id);
-      updateData.email = updateUserDto.email;
-    }
-
-    if (updateUserDto.password) {
-      updateData.passwordHash = await bcrypt.hash(updateUserDto.password, 10);
-    }
-
-    try {
-      const updatedUser = await this.userModel.findByIdAndUpdate(
-        id,
-        { $set: updateData },
-        { new: true, runValidators: true }
-      ).exec();
-
-      console.log(`Updated user: ${JSON.stringify(updatedUser)}`);
-
-      if (!updatedUser) {
-        throw new NotFoundException(`User with ID not found`);
-      }
-
-      // Remove sensitive data before returning
-      updatedUser.passwordHash = '';
-      return updatedUser;
-    } catch (e) {
-      if (e instanceof ConflictException) {
-        throw e;
-      }
-      throw new InternalServerErrorException('Failed to update user');
-    }
+    return this.userModel
+      .findByIdAndUpdate(id, updateData, { new: true })
+      .exec();
   }
 
   async delete(id: Types.ObjectId): Promise<User | null> {

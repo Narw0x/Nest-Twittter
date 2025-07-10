@@ -1,4 +1,4 @@
-import { GitHubBanner, Refine, WelcomePage } from "@refinedev/core";
+import { GitHubBanner, Refine } from "@refinedev/core";
 import { DevtoolsPanel, DevtoolsProvider } from "@refinedev/devtools";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
 
@@ -18,10 +18,14 @@ import { ColorModeContextProvider } from "./contexts/color-mode";
 import { UserList } from "./pages/users/list";
 import { UserCreate } from "./pages/users/create";
 import { UserEdit } from "./pages/users/edit";
+import { ShowUser } from "./pages/users/show";
 
 import { TwitList } from "./pages/twits/list";
 import { TwitCreate } from "./pages/twits/create";
 import { TwitEdit } from "./pages/twits/edit";
+import { ShowTwit } from "./pages/twits/show";
+
+import {LandingPage} from "./pages/Landing";
 
 function App() {
     return (
@@ -65,17 +69,20 @@ function App() {
                                 }}
                             >
                                 <Routes>
-                                    <Route index element={<WelcomePage />} />
+                                    <Route index element={<LandingPage />} />
 
                                     {/* User routes */}
                                     <Route path="/users" element={<UserList />} />
                                     <Route path="/users/create" element={<UserCreate />} />
                                     <Route path="/users/:id/edit" element={<UserEdit />} />
+                                    <Route path="/users/:id" element={<ShowUser />} />
 
                                     {/* Twit routes */}
                                     <Route path="/twits" element={<TwitList />} />
                                     <Route path="/twits/create" element={<TwitCreate />} />
                                     <Route path="/twits/:id/edit" element={<TwitEdit />} />
+                                    <Route path="/twits/:id" element={<ShowTwit />} />
+
                                 </Routes>
                                 <RefineKbar />
                                 <UnsavedChangesNotifier />
