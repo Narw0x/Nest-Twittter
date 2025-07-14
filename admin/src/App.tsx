@@ -25,7 +25,10 @@ import { TwitCreate } from "./pages/twits/create";
 import { TwitEdit } from "./pages/twits/edit";
 import { ShowTwit } from "./pages/twits/show";
 
-import {LandingPage} from "./pages/Landing";
+import { LandingPage } from "./pages/Landing";
+
+// Import the layout component
+import { RefineLayout } from "./components/layouts";
 
 function App() {
     return (
@@ -69,20 +72,19 @@ function App() {
                                 }}
                             >
                                 <Routes>
+                                    {/* Landing page without sidebar */}
                                     <Route index element={<LandingPage />} />
 
-                                    {/* User routes */}
-                                    <Route path="/users" element={<UserList />} />
-                                    <Route path="/users/create" element={<UserCreate />} />
-                                    <Route path="/users/:id/edit" element={<UserEdit />} />
-                                    <Route path="/users/:id" element={<ShowUser />} />
+                                    {/* Routes with sidebar layout */}
+                                    <Route path="/users" element={<RefineLayout><UserList /></RefineLayout>} />
+                                    <Route path="/users/create" element={<RefineLayout><UserCreate /></RefineLayout>} />
+                                    <Route path="/users/:id/edit" element={<RefineLayout><UserEdit /></RefineLayout>} />
+                                    <Route path="/users/:id" element={<RefineLayout><ShowUser /></RefineLayout>} />
 
-                                    {/* Twit routes */}
-                                    <Route path="/twits" element={<TwitList />} />
-                                    <Route path="/twits/create" element={<TwitCreate />} />
-                                    <Route path="/twits/:id/edit" element={<TwitEdit />} />
-                                    <Route path="/twits/:id" element={<ShowTwit />} />
-
+                                    <Route path="/twits" element={<RefineLayout><TwitList /></RefineLayout>} />
+                                    <Route path="/twits/create" element={<RefineLayout><TwitCreate /></RefineLayout>} />
+                                    <Route path="/twits/:id/edit" element={<RefineLayout><TwitEdit /></RefineLayout>} />
+                                    <Route path="/twits/:id" element={<RefineLayout><ShowTwit /></RefineLayout>} />
                                 </Routes>
                                 <RefineKbar />
                                 <UnsavedChangesNotifier />
